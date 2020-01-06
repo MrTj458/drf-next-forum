@@ -50,7 +50,7 @@ class TopicSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Topic
-        fields = ['id', 'title', 'author']
+        fields = ['id', 'title', 'author', 'created_at']
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -64,7 +64,7 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Post
         fields = ['id', 'title', 'body', 'author',
-                  'likes', 'liked_by_user', 'topic_id']
+                  'likes', 'liked_by_user', 'topic_id', 'created_at']
         read_only_fields = ['id']
 
     def get_liked_by_user(self, obj):
@@ -89,5 +89,5 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Comment
-        fields = ['id', 'body', 'author', 'post_id']
+        fields = ['id', 'body', 'author', 'post_id', 'created_at']
         read_only_fields = ['id']

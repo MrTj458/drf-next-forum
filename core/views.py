@@ -20,7 +20,7 @@ class TopicViewSet(ViewSet):
 
     def list(self, request):
         """Get all topics"""
-        topics = Topic.objects.all()
+        topics = Topic.objects.all().order_by('-created_at')
         serialized_topics = TopicSerializer(topics, many=True)
         return Response({'topics': serialized_topics.data})
 
@@ -77,7 +77,7 @@ class TopicViewSet(ViewSet):
             })
         else:
             """Get posts for a topic"""
-            posts = topic.post_set.all()
+            posts = topic.post_set.all().order_by('-created_at')
             serialized_posts = PostSerializer(
                 posts, many=True, context={'request': request})
             return Response({
@@ -143,7 +143,7 @@ class PostViewSet(ViewSet):
             })
         else:
             """Return comments for a post"""
-            comments = post.comment_set.all()
+            comments = post.comment_set.all().order_by('-created_at')
             serialized_comments = CommentSerializer(comments, many=True)
             return Response({
                 'comments': serialized_comments.data,
