@@ -48,9 +48,6 @@ const Nav = () => {
               <Link href="/login">
                 <a className="nav-item nav-link">Sign In</a>
               </Link>
-              <Link href="/profile">
-                <a className="nav-item nav-link">Profile</a>
-              </Link>
               <Link href="/register">
                 <a className="nav-item nav-link">Register</a>
               </Link>

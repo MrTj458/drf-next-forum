@@ -16,7 +16,7 @@ const Home = ({ topics }) => {
   )
 }
 
-Home.getInitialProps = async ({ ctx }) => {
+Home.getInitialProps = async () => {
   const res = await client.get('/api/topics/')
 
   return {

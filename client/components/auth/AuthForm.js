@@ -8,10 +8,14 @@ import { setToken } from '../../utils/auth'
 
 const AuthForm = ({ register }) => {
   const router = useRouter()
+  const { setUser } = React.useContext(userContext)
   const inputRef = React.useRef(null)
+
+  // State
   const [username, setUsername] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+  const [loading, setLoading] = React.useState(false)
   const [errors, setErrors] = React.useState({
     username: null,
     email: null,
@@ -19,8 +23,6 @@ const AuthForm = ({ register }) => {
     authentication: null,
     unknown: null,
   })
-  const [loading, setLoading] = React.useState(false)
-  const { setUser } = React.useContext(userContext)
 
   React.useEffect(() => {
     inputRef.current.focus()

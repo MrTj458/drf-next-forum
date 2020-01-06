@@ -10,7 +10,7 @@ export const setToken = token => {
 
 export const removeToken = () => {
   Cookies.remove('token')
-  delete client.defaults.headers.common['Authorization']
+  client.defaults.headers.common['Authorization'] = ''
 }
 
 /**
@@ -45,15 +45,19 @@ export const requireLogin = (ctx, initialUser) => {
 export const anonOnly = (ctx, initialUser) => {
   const req = ctx.ctx.req
   const res = ctx.ctx.res
+  const msg = 'You are already signed in.'
 
   if (initialUser.id) {
     if (req) {
       res.writeHead(302, {
-        Location: '/',
+        Location: `/?msg=${msg}`,
       })
       res.end()
     } else {
-      Router.push('/')
+      Router.push({
+        pathname: '/',
+        query: { msg },
+      })
     }
   }
 }
