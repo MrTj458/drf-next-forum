@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 import client from '../../utils/client'
 
-const Topic = ({ topic }) => {
+const TopicPage = ({ topic }) => {
   if (!topic.id) {
     return (
       <div className="text-center">
@@ -30,7 +30,7 @@ const Topic = ({ topic }) => {
   )
 }
 
-Topic.getInitialProps = async ctx => {
+TopicPage.getInitialProps = async ctx => {
   let topic = {}
 
   try {
@@ -43,4 +43,4 @@ Topic.getInitialProps = async ctx => {
   }
 }
 
-export default Topic
+export default TopicPage

@@ -71,10 +71,9 @@ const AuthForm = ({ register }) => {
             {register ? 'Register' : 'Sign In'}
           </h1>
           <hr />
-          {(errors.authentication || errors.unknown || router.query.msg) && (
+          {(errors.authentication || errors.unknown) && (
             <div className="alert alert-danger text-center">
               {errors.authentication && errors.authentication[0]}
-              {router.query.msg && router.query.msg}
               {errors.unknown}
             </div>
           )}
