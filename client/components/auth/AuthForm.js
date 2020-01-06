@@ -15,11 +15,13 @@ const AuthForm = ({ register }) => {
   const [username, setUsername] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+  const [password2, setPassword2] = React.useState('')
   const [loading, setLoading] = React.useState(false)
   const [errors, setErrors] = React.useState({
     username: null,
     email: null,
     password: null,
+    password2: null,
     authentication: null,
     unknown: null,
   })
@@ -31,6 +33,13 @@ const AuthForm = ({ register }) => {
   const handleSubmit = async e => {
     e.preventDefault()
     setLoading(true)
+
+    // Make sure passwords match when registering
+    if (register && password !== password2) {
+      setErrors({ ...errors, password2: ['Passwords must match'] })
+      setLoading(false)
+      return
+    }
 
     try {
       let res = null
@@ -89,6 +98,7 @@ const AuthForm = ({ register }) => {
                   className={`form-control ${errors.username && 'is-invalid'}`}
                   ref={inputRef}
                   type="text"
+                  value={username}
                   onChange={e => setUsername(e.target.value)}
                 />
                 {errors.username && (
@@ -103,6 +113,7 @@ const AuthForm = ({ register }) => {
                   <input
                     className={`form-control ${errors.email && 'is-invalid'}`}
                     type="text"
+                    value={email}
                     onChange={e => setEmail(e.target.value)}
                   />
                   {errors.email && (
@@ -117,12 +128,30 @@ const AuthForm = ({ register }) => {
                 <input
                   className={`form-control ${errors.password && 'is-invalid'}`}
                   type="password"
+                  value={password}
                   onChange={e => setPassword(e.target.value)}
                 />
                 {errors.password && (
                   <small className="text-danger">{errors.password[0]}</small>
                 )}
               </div>
+
+              {/* Password 2 */}
+              {register && (
+                <div className="form-group">
+                  <label htmlFor="password2">Confirm Password*</label>
+                  <input
+                    className={`form-control ${errors.password2 &&
+                      'is-invalid'}`}
+                    type="password"
+                    value={password2}
+                    onChange={e => setPassword2(e.target.value)}
+                  />
+                  {errors.password2 && (
+                    <small className="text-danger">{errors.password2[0]}</small>
+                  )}
+                </div>
+              )}
 
               {register ? (
                 <Link href="/login">
