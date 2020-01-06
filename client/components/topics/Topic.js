@@ -5,7 +5,7 @@ const Topic = ({ topic }) => {
   return (
     <>
       <h3>
-        <Link href={`/topics/${topic.id}`}>
+        <Link href="/topics/[id]" as={`/topics/${topic.id}`}>
           <a>{topic.title}</a>
         </Link>
       </h3>
