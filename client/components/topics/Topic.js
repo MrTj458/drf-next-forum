@@ -9,7 +9,10 @@ const Topic = ({ topic }) => {
           <a>{topic.title}</a>
         </Link>
       </h3>
-      <p>Created by: {topic.author.username}</p>
+      <small className="text-muted">
+        Created by: {topic.author.username} on{' '}
+        {new Date(topic.created_at).toLocaleDateString()}
+      </small>
     </>
   )
 }

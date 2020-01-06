@@ -49,7 +49,10 @@ const AuthForm = ({ register }) => {
       setUser(res.data.user)
       setToken(res.data.token)
       if (router.query.next) {
-        router.push(`${router.query.next}`)
+        router.push(
+          `${router.query.next}`,
+          `${router.query.nextAs ? router.query.nextAs : router.query.next}`
+        )
       } else {
         router.push('/')
       }

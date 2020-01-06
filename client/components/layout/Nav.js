@@ -59,7 +59,10 @@ const Nav = () => {
               <Link href="/profile">
                 <a className="nav-item nav-link">{user.username}</a>
               </Link>
-              <button onClick={logout} className="btn btn-link nav-link">
+              <button
+                onClick={logout}
+                className="btn btn-link nav-item nav-link"
+              >
                 Logout
               </button>
             </>
