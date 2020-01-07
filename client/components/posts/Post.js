@@ -38,11 +38,12 @@ const Post = ({ post, replacePost }) => {
   return (
     <>
       <div className="d-flex align-items-center">
-        <button
-          onClick={like}
-          className={`mr-2 btn ${post.liked_by_user && 'text-primary'}`}
-        >
-          <i className="fas fa-arrow-up"></i>
+        <button onClick={like} className="mr-2 btn">
+          {post.liked_by_user ? (
+            <i style={{ color: 'red' }} className="fas fa-heart"></i>
+          ) : (
+            <i className="far fa-heart"></i>
+          )}{' '}
           {post.likes}
         </button>
         <h3>
