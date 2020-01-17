@@ -27,7 +27,7 @@ const Comment = ({ comment, removeComment }) => {
         {new Date(comment.created_at).toLocaleString()}
         {user.id === comment.author.id && (
           <button
-            className="btn btn-sm btn-danger ml-2"
+            className="btn btn-sm btn-outline-danger ml-2"
             onClick={deleteComment}
           >
             {loading ? <div className="spinner-border" /> : 'Delete'}

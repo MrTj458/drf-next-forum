@@ -17,7 +17,7 @@ const Nav = () => {
   }
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
       <Link href="/">
         <a className="navbar-brand">Forum</a>
       </Link>

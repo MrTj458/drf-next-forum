@@ -40,7 +40,7 @@ const Post = ({ post, initialComments }) => {
           {user.id === post.author.id && (
             <div className="mt-2 d-flex justify-content-center">
               <button className="btn btn-outline-secondary mr-2">Edit</button>
-              <button className="btn btn-danger" onClick={deletePost}>
+              <button className="btn btn-outline-danger" onClick={deletePost}>
                 Delete
               </button>
             </div>
