@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 
 import client from '../../utils/client'
 import { userContext } from '../../components/auth/UserProvider'
@@ -7,7 +8,9 @@ import CommentForm from '../../components/posts/CommentForm'
 import Comment from '../../components/posts/Comment'
 
 const Post = ({ post, initialComments }) => {
+  const router = useRouter()
   const { user } = React.useContext(userContext)
+  const [loading, setLoading] = useState(false)
 
   const [comments, setComments] = React.useState(initialComments)
 
@@ -21,11 +24,14 @@ const Post = ({ post, initialComments }) => {
     setComments(newComments)
   }
 
-  const deletePost = () => {
+  const deletePost = async () => {
+    setLoading(true)
     try {
-      // Delete post
-      alert('TODO')
-    } catch (e) {}
+      await client.delete(`/api/posts/${post.id}/`)
+      router.push('/topics/[id]', `/topics/${post.topic_id}`)
+    } catch (e) {
+      setLoading(false)
+    }
   }
 
   return (
@@ -41,7 +47,7 @@ const Post = ({ post, initialComments }) => {
             <div className="mt-2 d-flex justify-content-center">
               <button className="btn btn-outline-secondary mr-2">Edit</button>
               <button className="btn btn-outline-danger" onClick={deletePost}>
-                Delete
+                {loading ? <div className="spinner-border" /> : 'Delete'}
               </button>
             </div>
           )}
