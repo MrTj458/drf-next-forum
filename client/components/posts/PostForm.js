@@ -3,12 +3,22 @@ import { useRouter } from 'next/router'
 
 import client from '../../utils/client'
 
-const PostForm = ({ topicId }) => {
+const defaultInitialData = {
+  title: '',
+  body: '',
+}
+
+const PostForm = ({
+  topicId,
+  update = false,
+  done = null,
+  initialData = defaultInitialData,
+}) => {
   const router = useRouter()
   const titleRef = useRef(null)
 
-  const [title, setTitle] = useState('')
-  const [body, setBody] = useState('')
+  const [title, setTitle] = useState(initialData.title)
+  const [body, setBody] = useState(initialData.body)
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({
     title: null,
@@ -25,10 +35,20 @@ const PostForm = ({ topicId }) => {
     setLoading(true)
 
     try {
-      const res = await client.post(`/api/topics/${topicId}/posts/`, {
-        title,
-        body,
-      })
+      let res = {}
+
+      if (update) {
+        res = await client.put(`/api/posts/${initialData.id}/`, {
+          title,
+          body,
+        })
+        done()
+      } else {
+        res = await client.post(`/api/topics/${topicId}/posts/`, {
+          title,
+          body,
+        })
+      }
       router.push('/posts/[id]', `/posts/${res.data.post.id}`)
     } catch (err) {
       if (err.response) {
@@ -43,7 +63,9 @@ const PostForm = ({ topicId }) => {
   return (
     <div className="card my-4">
       <div className="card-body">
-        <h2 className="card-title">Create a new Post</h2>
+        <h2 className="card-title">
+          {update ? 'Update Post' : 'Create A New Post'}
+        </h2>
         {errors.unknown && (
           <div className="alert alert-danger text-center">{errors.unknown}</div>
         )}
@@ -72,13 +94,19 @@ const PostForm = ({ topicId }) => {
                 value={body}
                 onChange={e => setBody(e.target.value)}
               />
-              {errors.title && (
+              {errors.body && (
                 <small className="text-danger">{errors.title[0]}</small>
               )}
             </div>
 
             <button type="submit" className="btn btn-primary">
-              {loading ? <div className="spinner-border" /> : 'Create Post'}
+              {loading ? (
+                <div className="spinner-border" />
+              ) : update ? (
+                'Update Post'
+              ) : (
+                'Create Post'
+              )}
             </button>
           </fieldset>
         </form>

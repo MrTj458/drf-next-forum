@@ -4,12 +4,14 @@ import { useRouter } from 'next/router'
 import client from '../../utils/client'
 import { userContext } from '../../components/auth/UserProvider'
 
+import PostForm from '../../components/posts/PostForm'
 import CommentForm from '../../components/posts/CommentForm'
 import Comment from '../../components/posts/Comment'
 
 const Post = ({ post, initialComments }) => {
   const router = useRouter()
   const { user } = React.useContext(userContext)
+  const [editing, setEditing] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const [comments, setComments] = React.useState(initialComments)
@@ -34,6 +36,10 @@ const Post = ({ post, initialComments }) => {
     }
   }
 
+  const updated = () => {
+    setEditing(false)
+  }
+
   return (
     <>
       <div className="card shadow mt-4">
@@ -45,7 +51,12 @@ const Post = ({ post, initialComments }) => {
           </div>
           {user.id === post.author.id && (
             <div className="mt-2 d-flex justify-content-center">
-              <button className="btn btn-outline-secondary mr-2">Edit</button>
+              <button
+                className="btn btn-outline-secondary mr-2"
+                onClick={() => setEditing(!editing)}
+              >
+                Edit
+              </button>
               <button className="btn btn-outline-danger" onClick={deletePost}>
                 {loading ? <div className="spinner-border" /> : 'Delete'}
               </button>
@@ -55,6 +66,15 @@ const Post = ({ post, initialComments }) => {
           <p className="card-text">{post.body}</p>
         </div>
       </div>
+
+      {editing && (
+        <PostForm
+          topicId={post.topic_id}
+          update={true}
+          done={updated}
+          initialData={post}
+        />
+      )}
 
       {user.id && <CommentForm postId={post.id} addComment={addComment} />}
 
