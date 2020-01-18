@@ -95,7 +95,7 @@ const PostForm = ({
                 onChange={e => setBody(e.target.value)}
               />
               {errors.body && (
-                <small className="text-danger">{errors.title[0]}</small>
+                <small className="text-danger">{errors.body[0]}</small>
               )}
             </div>
 
