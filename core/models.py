@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 
 
 class Topic(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, unique=True)
     author = models.ForeignKey(get_user_model(), models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
 
