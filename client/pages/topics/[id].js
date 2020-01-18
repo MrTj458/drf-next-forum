@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import client from '../../utils/client'
 import { userContext } from '../../components/auth/UserProvider'
@@ -8,10 +9,12 @@ import Post from '../../components/posts/Post'
 import PostForm from '../../components/posts/PostForm'
 
 const TopicPage = ({ topic, initialPosts }) => {
+  const router = useRouter()
   const { user } = useContext(userContext)
 
   const [posts, setPosts] = useState(initialPosts)
   const [showForm, setShowForm] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const replacePost = newPost => {
     const newPosts = posts.map(post => {
@@ -21,6 +24,17 @@ const TopicPage = ({ topic, initialPosts }) => {
       return post
     })
     setPosts(newPosts)
+  }
+
+  const deleteTopic = async () => {
+    setLoading(true)
+
+    try {
+      await client.delete(`/api/topics/${topic.id}/`)
+      router.push('/')
+    } catch (e) {
+      setLoading(false)
+    }
   }
 
   if (!topic.id) {
@@ -51,6 +65,11 @@ const TopicPage = ({ topic, initialPosts }) => {
             onClick={() => setShowForm(!showForm)}
           >
             Create New Post
+          </button>
+        )}
+        {user.id === topic.author.id && (
+          <button className="btn btn-outline-danger ml-2" onClick={deleteTopic}>
+            {loading ? <div className="spinner-border" /> : 'Delete Topic'}
           </button>
         )}
       </div>
