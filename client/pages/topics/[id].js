@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import Link from 'next/link'
 
 import client from '../../utils/client'
+import { userContext } from '../../components/auth/UserProvider'
 
 import Post from '../../components/posts/Post'
+import PostForm from '../../components/posts/PostForm'
 
 const TopicPage = ({ topic, initialPosts }) => {
-  const [posts, setPosts] = React.useState(initialPosts)
+  const { user } = useContext(userContext)
+
+  const [posts, setPosts] = useState(initialPosts)
+  const [showForm, setShowForm] = useState(false)
 
   const replacePost = newPost => {
     const newPosts = posts.map(post => {
@@ -38,6 +43,18 @@ const TopicPage = ({ topic, initialPosts }) => {
           {new Date(topic.created_at).toLocaleDateString()}
         </small>
       </p>
+
+      <div className="d-flex justify-content-center mb-2">
+        {user.id && (
+          <button
+            className="btn btn-primary"
+            onClick={() => setShowForm(!showForm)}
+          >
+            Create New Post
+          </button>
+        )}
+      </div>
+      {showForm && <PostForm topicId={topic.id} />}
 
       <div className="card shadow">
         <div className="card-body">
