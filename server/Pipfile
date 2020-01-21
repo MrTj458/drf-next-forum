@@ -11,6 +11,10 @@ pylint = "*"
 django = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
+django-dotenv = "*"
+whitenoise = "*"
+gunicorn = "*"
+psycopg2-binary = "*"
 
 [requires]
 python_version = "3.7"
