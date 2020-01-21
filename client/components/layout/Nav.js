@@ -35,9 +35,9 @@ const Nav = () => {
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         {/* Left side nav */}
         <div className="navbar-nav mr-auto">
-          <a className="nav-item nav-link" href="#">
-            Stuff
-          </a>
+          <Link href="/about">
+            <a className="nav-item nav-link">About</a>
+          </Link>
         </div>
 
         {/* Right side nav */}
